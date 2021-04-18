@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "deps": "yarn install",
+    "watch": "shadow-cljs watch app",
+    "release": "shadow-cljs release app",
+    "server": "shadow-cljs server",
+    "postcss": "postcss styles/styles.css -o public/css/style.css",
+    "clean": "rm -rf target; rm -rf public/js/compiled"
+  },
+  "dependencies": {
+    "@react-pdf/fontkit": "^1.15.0",
+    "create-react-class": "^15.6.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "onchange": "^7.1.0",
+    "postcss": "^8.2.8",
+    "shadow-cljs": "^2.0.80",
+    "tailwindcss": "^2.0.3"
+  }
+}
