@@ -15,6 +15,7 @@
         :output-dir "public/js/compiled"
         :asset-path "/js/compiled"
 
+        :compiler-options {:externs ["src/fontkit.browser.es.js"]} 
         :modules
         {:main
          {:entries [app.core]}}

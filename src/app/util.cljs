@@ -11,6 +11,46 @@
    [clojure.walk :as walk]
    [promesa.core :as p]))
 
+(comment
+ (-> (js/fetch "http://localhost:8700/fonts/mnglwhiteotf.ttf" #js {})
+     (.then (fn [resp]
+              (if (>= (.-status resp) 400)
+                #(js/console.log "error on fetch")
+                (if (.-ok resp)
+           
+                  (def res resp)   
+                  #(js/console.log "error on fetch"))))))
+  
+  (-> (.arrayBuffer res)
+      (.then (fn [v]
+               (def buff v))))
+  
+  buff
+
+  (def font (js/window.fontkit.create buff))
+
+  font
+
+  (def aa (.layout font "abc"))
+ aa
+  
+  (.-glyphs aa)
+
+  (def res nil)
+  res
+  (p/let [fetch (js/fetch "http://localhost:8700/fonts/mnglwhiteotf.ttf" #js {})]
+    (p/then fetch (fn [resp]
+                    (if (>= (.-status resp) 400)
+                      #(js/console.log "error on fetch")
+                      (if (.-ok resp)
+
+                        (def res resp)
+                        #(js/console.log "error on fetch"))))))
+  
+  re
+  )
+  
+
 (defn fetch
   ([url on-ok on-failed]
    (fetch url {} on-ok on-failed))
