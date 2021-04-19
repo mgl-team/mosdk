@@ -219,7 +219,7 @@
    destination-atop, destination-in, destination-out, destination-over,
    lighter, darker, copy, xor"
   [ctx operation]
-  (set! (.-globalCompositionOperation ctx) (name operation))
+  (set! (.-globalCompositeOperation ctx) (name operation))
   ctx)
 
 (defn text-align
@@ -351,7 +351,7 @@
                 (catch js/Error e
                   (.log js/console e))))
             (recur (inc i))))))
-    (core/animation-frame #(draw-loop mc))))
+    (animation-frame #(draw-loop mc))))
 
 (defn monet-canvas [elem context-type]
   (let [ct (or context-type "2d")
