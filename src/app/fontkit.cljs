@@ -27,3 +27,4 @@
 
 (defn render [glyph ctx size]
   (.render glyph ctx size))
+

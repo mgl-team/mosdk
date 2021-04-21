@@ -6,6 +6,8 @@
   (.advanceWidth glyph))
 
 ;; (apply + (map width glyphs))
+(defn width-of-string [glyphs]
+  (apply + (map width glyphs)))
 
 (defn render [glyph ctx size]
   (.render glyph ctx size))
