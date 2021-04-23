@@ -107,6 +107,7 @@
   (.-copyright font)
   (.-namedVariations font)
   (.-unitsPerEm font)
+  (.-head font)
 
   (def aa (.layout font "abc"))
   (def aa (.layout font "ᠡᠷᠬᠡ"))

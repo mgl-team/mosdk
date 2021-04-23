@@ -11,17 +11,17 @@
   <
   rum/reactive
   {:did-mount (fn [state]
-                (let [canv (.getElementById js/document "canvas")
-                      ctx (canvas/get-context canv "2d")]
-                  (.translate ctx (/ (.-width canv) 2) (/ (.-height canv) 2))
-                  (.scale ctx -1 1)
+                ;; (let [canv (.getElementById js/document "canvas")
+                ;;       ctx (canvas/get-context canv "2d")]
+                ;;   (.translate ctx (/ (.-width canv) 2) (/ (.-height canv) 2))
+                ;;   (.scale ctx -1 1)
 
-                  (.rotate ctx (+ (/ js/Math.PI 2)))
-                  (canvas/text ctx {:text "ClojureScript is a compiler for Clojure that targets JavaScript. It emits JavaScript code which is compatible with the advanced compilation mode of the Google Closure optimizing compiler." :x 0 :y 0}))
+                ;;   (.rotate ctx (+ (/ js/Math.PI 2)))
+                ;;   (canvas/text ctx {:text "ClojureScript is a compiler for Clojure that targets JavaScript. It emits JavaScript code which is compatible with the advanced compilation mode of the Google Closure optimizing compiler." :x 0 :y 0}))
                 state)}
   []
 
-  [:canvas#canvas.flex.min-h-screen])
+  [:canvas#canvas.h-auto.w-auto])
 
 (defn start []
   ;; start is called by init and after code reloading finishes

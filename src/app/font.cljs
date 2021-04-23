@@ -36,7 +36,7 @@
                    glyphs))))
 
 (comment
-  (load :white "http://localhost:8700/fonts/mnglwhiteotf.ttf")
+  (load :white "http://localhost:8700/fonts/monbaiti.ttf")
 
   (get-font :white)
   (units-per-em :white)
@@ -45,5 +45,10 @@
   (def glyphs (.-glyphs (layout :white "ᠡᠷᠬᠡ")))
   (width :white 24 glyphs)
   (prn "aa")
+  (.-head (get-font :white))
+  (.getVariation (get-font :white) #js {:wght 0.5})
+  (.-variationAxes (get-font :white))
+  (.-copyright (get-font :white))
+
   ;;
   )
