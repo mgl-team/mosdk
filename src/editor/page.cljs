@@ -1,4 +1,4 @@
-(ns app.editor.page
+(ns editor.page
   (:require
    [app.canvas :as canvas]))
 
