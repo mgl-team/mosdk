@@ -3,7 +3,7 @@
 ## Run
 
 ``` shell
-#添加一个依赖包
+#添加依赖包
 yarn add @react-pdf/fontkit
 
 #初始化某个项目
