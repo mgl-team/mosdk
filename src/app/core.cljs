@@ -7,21 +7,11 @@
 
 (defonce app-state (atom {:text "Hello world!"}))
 
-(rum/defcs page
-  <
-  rum/reactive
-  {:did-mount (fn [state]
-                ;; (let [canv (.getElementById js/document "canvas")
-                ;;       ctx (canvas/get-context canv "2d")]
-                ;;   (.translate ctx (/ (.-width canv) 2) (/ (.-height canv) 2))
-                ;;   (.scale ctx -1 1)
-
-                ;;   (.rotate ctx (+ (/ js/Math.PI 2)))
-                ;;   (canvas/text ctx {:text "ClojureScript is a compiler for Clojure that targets JavaScript. It emits JavaScript code which is compatible with the advanced compilation mode of the Google Closure optimizing compiler." :x 0 :y 0}))
-                state)}
+(rum/defc page
   []
-
-  [:canvas#canvas.h-auto.w-auto])
+  [:div.border-collapse.table-fixed.h-full.w-full
+   [:div#viewport-hbox-layout.absolute.h-full.w-full
+    [:#editor-container]]])
 
 (defn start []
   ;; start is called by init and after code reloading finishes
