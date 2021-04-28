@@ -30,7 +30,9 @@
 (defn on-resize [e]
   (let [height (.-innerHeight js/window)
         width  (.-innerWidth js/window)]
-    (js/console.log height)
+    (js/console.log width height)
+    (js/console.log (.-clientWidth @container)
+                    (.-clientHeight @container))
     ;; (aset (.-style container) "width" "")
     ))
 (comment
