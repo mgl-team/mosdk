@@ -132,8 +132,33 @@
 
         -dpr            (if (< dpr 0.5) (js/Math.ceil dpr) (js/Math.round dpr))
         line-width      (js/Math.floor dpr)]
-    
-    ))
+
+    (set! (.-width piper-image-ver) len2)
+    (set! (.-height piper-image-ver) len1)
+
+    (set! (.-width piper-image-hor) len1)
+    (set! (.-height piper-image-hor) len2)
+
+    ;; add behind elements
+    (doseq [x [ctx-ver ctx-hor]] (cv/composition-operation x "destination-over"))
+    (doseq [x [ctx-ver ctx-hor]] (cv/fill-style x "#D7D7D7"))
+    (doseq [x [ctx-ver ctx-hor]] (cv/stroke-width x line-width))
+
+    (cv/fill-rect ctx-ver {:x 0 :y 0 :w len2 :h len1})
+    (cv/fill-rect ctx-hor {:x 0 :y 0 :w len1 :h len2})
+
+    (let [steps (map #(+ % -dpr (js/Math.floor dpr)) (range 0 7))]
+      (doseq [step steps]
+        (let [y (+ step (* 0.5 line-width))]
+          (cv/move-to ctx-ver 0 y)
+          (cv/line-to ctx-ver len2 y)
+          (cv/stroke ctx-ver)))
+
+      (doseq [step steps]
+        (let [x (+ step (* 0.5 line-width))]
+          (cv/move-to ctx-hor x 0)
+          (cv/line-to ctx-hor x len2)
+          (cv/stroke ctx-hor))))))
 
 (defn init-arrow [size-w size-h is-retina]
   nil)
@@ -160,7 +185,10 @@
 
   (cv/clear-rect ctx {:x 0 :y 0 :w 100 :h 100})
 
-  (def elem (create-canvas-element))
-  elem
+  (take 7 (range 0 8))
+  (js/Math.floor 2.0)
+
+(range 0 7)
+  (map #(+ % (* 0.5 2)) (range 0 7))
   )
 
