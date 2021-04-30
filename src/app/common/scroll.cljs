@@ -102,6 +102,8 @@
     (cv/translate ctx x y)
 
     (cv/begin-path ctx)
+    
+    (cv/shadow-color ctx "rgba(0,0,0,0)")
 
     (cv/move-to ctx 0 (- (/ h 2)))
     (cv/line-to ctx (- (/ side 2)) (/ h 2))
@@ -116,13 +118,11 @@
 (defn create-canvas-element []
   (js/document.createElement "canvas"))
 
-(defn draw-arrow [size]
-  )
 
 (defn draw-piper-image []
   (let [dpr             @browser/retina-pixel-ratio
-        len1            (js/Math.floor 13 dpr)
-        len2            (js/Math.floor 5 dpr)
+        len1            (js/Math.floor (* 13 dpr))
+        len2            (js/Math.floor (* 5 dpr))
 
         piper-image-ver (create-canvas-element)
         piper-image-hor (create-canvas-element)
@@ -160,8 +160,34 @@
           (cv/line-to ctx-hor x len2)
           (cv/stroke ctx-hor))))))
 
-(defn init-arrow [size-w size-h is-retina]
-  nil)
+(defn draw-arrow [size is-retina]
+  (let [dpr @browser/retina-pixel-ratio
+        round-dpr (round-for-scale @browser/retina-pixel-ratio)
+        isize (js/Math.floor (* size dpr))
+        arrow-element (create-canvas-element)
+        ctx (cv/get-context arrow-element "2d")]
+
+    ;; (set! (.-width arrow-element) isize)
+    ;; (set! (.-height arrow-element) isize)
+
+    ;; (cv/shadow-color ctx "rgba(0,0,0,0)")
+    
+    ;; (cv/begin-path ctx)
+    ;; (cv/stroke-style ctx "#cfcfcf")
+    ;; (cv/stroke-width ctx round-dpr)
+    ;; (let [x (- isize round-dpr)]
+    ;;   (cv/rect ctx {:x 0 :y 0 :w x :h x}))
+    
+    ;; (cv/stroke ctx)
+
+
+    (cv/fill-style ctx "#adadad")
+    (let [size-len (-> isize (/ 3) (* 1.5) (round-for-scale))
+          x (round-for-scale (/ isize 2))]
+      (draw-eq-triangle ctx size-len x x))
+
+    ;; return new element
+    arrow-element))
 
 
 
@@ -170,25 +196,43 @@
   (get-client-height nil)
 
   (round-for-scale 5.5)
+  (round-for-scale @browser/retina-pixel-ratio)
 
+  
 
-  (require '[app.canvas :as cv])
+  (require '[app.canvas :as cv] :reload)
+  cv/shadow-color
   (def canvas (js/document.getElementById "canvas"))
   canvas
   (def ctx (cv/get-context canvas "2d"))
   ctx
   (cv/fill-style ctx "#ADADAD")
-  (draw-eq-triangle ctx 30 20 20)
+  (cv/stroke-style ctx "#adadad")
+  (draw-eq-triangle ctx 100 60 60)
   (cv/stroke ctx)
   "aa"
   *1
 
-  (cv/clear-rect ctx {:x 0 :y 0 :w 100 :h 100})
+  (cv/clear-rect ctx {:x 0 :y 0 :w 200 :h 200})
 
-  (take 7 (range 0 8))
-  (js/Math.floor 2.0)
 
-(range 0 7)
-  (map #(+ % (* 0.5 2)) (range 0 7))
+  (def arrow (draw-arrow 13 nil))
+  arrow
+
+  (cv/shadow-color ctx "rgba(0,0,0,0)")
+  (cv/draw-image ctx arrow {:x 10 :y 10 :w 26 :h 26})
+  (cv/draw-image ctx arrow 10  10)
+  
+
+
+
+
+  (cv/shadow-color ctx "rgba(0,0,0,0)")
+    
+    (cv/begin-path ctx)
+    (cv/stroke-style ctx "#cfcfcf")
+    (cv/stroke-width ctx 2)
+    (cv/rect ctx {:x 10 :y 10 :w 50 :h 50})
+    (cv/stroke ctx)
   )
 
