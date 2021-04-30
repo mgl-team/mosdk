@@ -12,7 +12,7 @@
   [:div.border-collapse.table-fixed.h-full.w-full
    [:div#viewport-hbox-layout.absolute.h-full.w-full
     [:#editor-container
-     [:canvas#canvas]]]])
+     [:canvas#canvas {:width "200" :height "200" :style {:width "100px" :height "100px"}}]]]])
 
 (defn start []
   ;; start is called by init and after code reloading finishes

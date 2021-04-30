@@ -10,11 +10,6 @@
 (defn get-client-height [elem]
   (if elem (.-clientWidth elem) 0))
 
-(defn round-for-scale [value]
-  (if (<= (- value (js/Math.floor value)) 0.5)
-    (js/Math.floor value)
-    (js/Math.round value)))
-
 (defn default-settings []
   {:show                           true
    :screen-w                       -1
@@ -118,6 +113,11 @@
 (defn create-canvas-element []
   (js/document.createElement "canvas"))
 
+(defn round-for-scale [value]
+  (if (<= (- value (js/Math.floor value)) 0.5)
+    (js/Math.floor value)
+    (js/Math.round value)))
+
 
 (defn draw-piper-image []
   (let [dpr             @browser/retina-pixel-ratio
@@ -167,18 +167,18 @@
         arrow-element (create-canvas-element)
         ctx (cv/get-context arrow-element "2d")]
 
-    ;; (set! (.-width arrow-element) isize)
-    ;; (set! (.-height arrow-element) isize)
+    (set! (.-width arrow-element) isize)
+    (set! (.-height arrow-element) isize)
 
-    ;; (cv/shadow-color ctx "rgba(0,0,0,0)")
+    (cv/shadow-color ctx "rgba(0,0,0,0)")
     
-    ;; (cv/begin-path ctx)
-    ;; (cv/stroke-style ctx "#cfcfcf")
-    ;; (cv/stroke-width ctx round-dpr)
-    ;; (let [x (- isize round-dpr)]
-    ;;   (cv/rect ctx {:x 0 :y 0 :w x :h x}))
+    (cv/begin-path ctx)
+    (cv/stroke-style ctx "#cfcfcf")
+    (cv/stroke-width ctx round-dpr)
+    (let [x (- isize round-dpr)]
+      (cv/rect ctx {:x 0 :y 0 :w x :h x}))
     
-    ;; (cv/stroke ctx)
+    (cv/stroke ctx)
 
 
     (cv/fill-style ctx "#adadad")
@@ -201,6 +201,7 @@
   
 
   (require '[app.canvas :as cv] :reload)
+
   cv/shadow-color
   (def canvas (js/document.getElementById "canvas"))
   canvas
@@ -208,7 +209,7 @@
   ctx
   (cv/fill-style ctx "#ADADAD")
   (cv/stroke-style ctx "#adadad")
-  (draw-eq-triangle ctx 100 60 60)
+  (draw-eq-triangle ctx 30 60 60)
   (cv/stroke ctx)
   "aa"
   *1
@@ -216,7 +217,7 @@
   (cv/clear-rect ctx {:x 0 :y 0 :w 200 :h 200})
 
 
-  (def arrow (draw-arrow 13 nil))
+  (def arrow (draw-arrow 26 nil))
   arrow
 
   (cv/shadow-color ctx "rgba(0,0,0,0)")
