@@ -212,6 +212,11 @@
   (set! (.-globalAlpha ctx) a)
   ctx)
 
+(defn shadow-color 
+  [ctx color]
+  (set! (.-shadowColor ctx) color)
+  ctx)
+
 (defn composition-operation
   "With Global Alpha applied this sets how shapes and images are drawn
    onto the existing bitmap. Possible values (as string or keyword):
@@ -261,6 +266,14 @@
      4 (. ctx (drawImage img x y w h))
      8 (. ctx (drawImage img sx sy sw sh dx dy dw dh)))
    ctx))
+
+(defn create-image-data 
+  [ctx w h]
+  (. ctx (createImageData w h)))
+
+(defn put-image-data 
+  [ctx data]
+  (. ctx (putImageData data 0 0)))
 
 (defn quadratic-curve-to
   ([ctx cpx cpy x y]

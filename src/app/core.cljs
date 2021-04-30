@@ -11,7 +11,8 @@
   []
   [:div.border-collapse.table-fixed.h-full.w-full
    [:div#viewport-hbox-layout.absolute.h-full.w-full
-    [:#editor-container]]])
+    [:#editor-container
+     [:canvas#canvas]]]])
 
 (defn start []
   ;; start is called by init and after code reloading finishes
