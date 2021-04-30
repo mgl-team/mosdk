@@ -118,6 +118,34 @@
     (js/Math.floor value)
     (js/Math.round value)))
 
+(defn draw-arrow [size is-retina]
+  (let [dpr @browser/retina-pixel-ratio
+        round-dpr (round-for-scale @browser/retina-pixel-ratio)
+        isize (js/Math.floor (* size dpr))
+        arrow-element (create-canvas-element)
+        ctx (cv/get-context arrow-element "2d")]
+
+    (set! (.-width arrow-element) isize)
+    (set! (.-height arrow-element) isize)
+
+    ;; (cv/shadow-color ctx "rgba(0,0,0,0)")
+    
+    (cv/begin-path ctx)
+    (cv/stroke-style ctx "#cfcfcf")
+    (cv/stroke-width ctx round-dpr)
+    (let [x (- isize round-dpr)]
+      (cv/rect ctx {:x 0 :y 0 :w x :h x}))
+    
+    (cv/stroke ctx)
+
+
+    (cv/fill-style ctx "#adadad")
+    (let [size-len (-> isize (/ 3) (* 1.5) (round-for-scale))
+          x (round-for-scale (/ isize 2))]
+      (draw-eq-triangle ctx size-len x x))
+
+    ;; return new element
+    arrow-element))
 
 (defn draw-piper-image []
   (let [dpr             @browser/retina-pixel-ratio
@@ -158,38 +186,9 @@
         (let [x (+ step (* 0.5 line-width))]
           (cv/move-to ctx-hor x 0)
           (cv/line-to ctx-hor x len2)
-          (cv/stroke ctx-hor))))))
-
-(defn draw-arrow [size is-retina]
-  (let [dpr @browser/retina-pixel-ratio
-        round-dpr (round-for-scale @browser/retina-pixel-ratio)
-        isize (js/Math.floor (* size dpr))
-        arrow-element (create-canvas-element)
-        ctx (cv/get-context arrow-element "2d")]
-
-    (set! (.-width arrow-element) isize)
-    (set! (.-height arrow-element) isize)
-
-    (cv/shadow-color ctx "rgba(0,0,0,0)")
+          (cv/stroke ctx-hor))))
     
-    (cv/begin-path ctx)
-    (cv/stroke-style ctx "#cfcfcf")
-    (cv/stroke-width ctx round-dpr)
-    (let [x (- isize round-dpr)]
-      (cv/rect ctx {:x 0 :y 0 :w x :h x}))
-    
-    (cv/stroke ctx)
-
-
-    (cv/fill-style ctx "#adadad")
-    (let [size-len (-> isize (/ 3) (* 1.5) (round-for-scale))
-          x (round-for-scale (/ isize 2))]
-      (draw-eq-triangle ctx size-len x x))
-
-    ;; return new element
-    arrow-element))
-
-
+    [piper-image-ver piper-image-hor]))
 
 (comment
   (get-client-width nil)
@@ -210,9 +209,6 @@
   (cv/fill-style ctx "#ADADAD")
   (cv/stroke-style ctx "#adadad")
   (draw-eq-triangle ctx 30 60 60)
-  (cv/stroke ctx)
-  "aa"
-  *1
 
   (cv/clear-rect ctx {:x 0 :y 0 :w 200 :h 200})
 
@@ -226,14 +222,5 @@
   
 
 
-
-
-  (cv/shadow-color ctx "rgba(0,0,0,0)")
-    
-    (cv/begin-path ctx)
-    (cv/stroke-style ctx "#cfcfcf")
-    (cv/stroke-width ctx 2)
-    (cv/rect ctx {:x 10 :y 10 :w 50 :h 50})
-    (cv/stroke ctx)
   )
 
