@@ -3,16 +3,16 @@
 ## Run
 
 ``` shell
-#添加依赖包
+#install deps
 yarn add @react-pdf/fontkit
 
-#初始化某个项目
+#init
 yarn init
 
-#安装所有的依赖包
+#install
 yarn install
 
-#运行
+#run
 yarn watch
 ```
 
