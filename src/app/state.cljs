@@ -32,3 +32,13 @@
   (if (vector? path)
     (swap! state update-in path f)
     (swap! state update path f)))
+
+(defn setv [o k v]
+  (if (list? k)
+    (swap! o assoc-in k v)
+    (swap! o assoc k v)))
+
+(defn getv [o k]
+  (if (list? k)
+    (get-in @o k)
+    (get @o k)))

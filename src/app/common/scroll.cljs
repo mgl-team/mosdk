@@ -1,7 +1,8 @@
 (ns app.common.scroll
   (:require
    [app.common.browser :as browser]
-   [app.canvas :as cv]))
+   [app.canvas :as cv]
+   [app.state :refer [setv getv]]))
 
 
 (defn get-client-width [elem]
@@ -86,10 +87,11 @@
 
    :fade-in-fade-out-delay  (or (:fade-in-fade-out-delay settings) 30)})
 
+
 ;; https://stackoverflow.com/questions/8935930/create-equilateral-triangle-in-the-middle-of-canvas
 ;; 
 ;; 
-    
+
 (defn draw-eq-triangle [ctx side x y]
   (let [h (* side (js/Math.cos (/ js/Math.PI 6)))]
     (cv/save ctx)
@@ -97,7 +99,7 @@
     (cv/translate ctx x y)
 
     (cv/begin-path ctx)
-    
+
     (cv/shadow-color ctx "rgba(0,0,0,0)")
 
     (cv/move-to ctx 0 (- (/ h 2)))
@@ -129,13 +131,13 @@
     (set! (.-height arrow-element) isize)
 
     ;; (cv/shadow-color ctx "rgba(0,0,0,0)")
-    
+
     (cv/begin-path ctx)
     (cv/stroke-style ctx "#cfcfcf")
     (cv/stroke-width ctx round-dpr)
     (let [x (- isize round-dpr)]
       (cv/rect ctx {:x 0 :y 0 :w x :h x}))
-    
+
     (cv/stroke ctx)
 
 
@@ -187,8 +189,167 @@
           (cv/move-to ctx-hor x 0)
           (cv/line-to ctx-hor x len2)
           (cv/stroke ctx-hor))))
-    
+
     [piper-image-ver piper-image-hor]))
+
+(defn element-by-id [id]
+  (js/document.getElementById id))
+
+
+(def obj (atom {}))
+(def settings (atom {}))
+
+(defn- set-dimension [h w]
+  (let [dpr @browser/retina-pixel-ratio
+        dpr-h (js/Math.round (* h dpr))
+        dpr-w (js/Math.round (* w dpr))]
+    (if (and (= (:canvash @obj) dpr-h) 
+             (= (:canvasw @obj) dpr-w))
+      (setv obj :is-resize-arrows false)
+      (do
+        (setv obj :is-resize-arrows true)
+        (setv obj :canvash dpr-h)
+        (setv obj :canvasw dpr-w)
+        (setv obj :canvas-originalh h)
+        (setv obj :canvas-originalw w)
+        (set! (.-width (getv obj :canvas)) dpr-w)
+        (set! (.-height (getv obj :canvas)) dpr-h)))))
+
+(defn set-scroll-hw []
+  (let [dpr @browser/retina-pixel-ratio]
+    (when (get @settings :is-vertical-scroll)
+      (setv obj [:scroller :x] (round-for-scale dpr))
+      (setv obj [:scroller :w] (js/Math.round (* dpr (- (getv obj :canvas-originalw) 1))))
+
+      ;;init arrow image()
+      (when (getv settings :show-arrows)
+        nil))
+    (when (getv settings :is-horizontal-scroll)
+      (setv obj [:scroller :y] (round-for-scale dpr))
+      (setv obj [:scroller :h] (js/Math.round (-> (getv obj :canvas-originalh) (- 1) (* dpr))))
+
+      ;;init arrow image()
+      (when (getv settings :show-arrows)
+        nil))))
+
+(defn recalc-scroller
+  [pos]
+  (let [dpr @browser/retina-pixel-ratio]
+    (when (getv settings :is-vertical-scroll)
+      (if (:show-arrows @settings)
+        (do
+          (setv obj :vertical-track-height (- (getv obj :canvash) (* 2 (getv obj :arrow-position))))
+          (setv obj [:scroller :y] (getv obj :arrow-position)))
+        (do
+          (setv obj :vertical-track-height (getv obj :canvash))
+          (setv obj [:scroller :y] (js/Math.round dpr))))
+
+
+      (let [percent-in-view (-> (* (getv obj :max-scrolly) dpr)
+                                (+ (getv obj :panel-height))
+                                (/ (getv obj :panel-height)))]
+        (setv obj [:scroller :h] (-> (* (/ 1 percent-in-view)
+                                        (/ (getv obj :vertical-track-height) dpr))
+                                     (js/Math.ceil)
+                                     (* dpr)
+                                     (js/Math.ceil))))
+      (let [scroll-minh (-> (getv settings :scroller-min-height)
+                            (* dpr)
+                            (js/Math.round))]
+
+        (when (< (getv obj [:scroller :h]) scroll-minh)
+          (setv obj [:scroller :h] scroll-minh))
+
+        (when (> (getv obj [:scroller :h]) (getv settings :scroller-max-height))
+          (setv obj [:scrooler :h] (getv settings :scroller-max-height))))
+
+      (let [scroll-coeff (/ (getv obj :max-scrolly)
+                            (max 1 (getv obj :panel-height) (getv obj [:scroller :h])))]
+        (when pos
+          (setv obj [:scroller :y] (/ pos (+ scroll-coeff (getv obj :arrow-position))))))
+
+      (setv obj :drag-maxy (+ 1 (- (getv obj :canvash) (getv obj :arrow-position) (getv obj [:scroller :h]))))
+      (setv obj :drag-miny (getv obj :arrow-position)))
+
+    (when (getv settings :is-horizontal-scroll)
+      (if (:show-arrows @settings)
+        (do
+          (setv obj :horizontal-track-height (- (getv obj :canvasw) (* 2 (getv obj :arrow-position))))
+          (setv obj [:scroller :x] (getv obj :arrow-position)))
+        (do
+          (setv obj :horizontal-track-height (getv obj :canvasw))
+          (setv obj [:scroller :x] (js/Math.round dpr))))
+
+
+      (let [percent-in-view (-> (* (getv obj :max-scrollx) dpr)
+                                (+ (getv obj :panel-width))
+                                (/ (getv obj :panel-width)))]
+        (setv obj [:scroller :w] (-> (* (/ 1 percent-in-view)
+                                        (/ (getv obj :horizontal-track-height) dpr))
+                                     (js/Math.ceil)
+                                     (* dpr)
+                                     (js/Math.ceil))))
+      (let [scroll-minw (-> (getv settings :scroller-min-width)
+                            (* dpr)
+                            (js/Math.round))]
+
+        (when (< (getv obj [:scroller :w]) scroll-minw)
+          (setv obj [:scroller :w] scroll-minw))
+
+        (when (> (getv obj [:scroller :w]) (getv settings :scroller-max-width))
+          (setv obj [:scrooler :w] (getv settings :scroller-max-width))))
+
+      (let [scroll-coeff (/ (getv obj :max-scrollx)
+                            (max 1 (getv obj :panel-width) (getv obj [:scroller :w])))]
+        (when pos
+          (setv obj [:scroller :x] (/ pos (+ scroll-coeff (getv obj :arrow-position))))))
+
+      (setv obj :drag-maxx (+ 1 (- (getv obj :canvasw) (getv obj :arrow-position) (getv obj [:scroller :w]))))
+      (setv obj :drag-minx (getv obj :arrow-position)))))
+
+      
+
+
+(defn scroll-init [eid settings]
+  (let [holder  (element-by-id eid)
+        canvas  (.appendChild holder (create-canvas-element))
+        context (cv/get-context canvas "2d")
+        dpr     @browser/retina-pixel-ratio]
+    (aset (.-style canvas) "width" "100%")
+    (aset (.-style canvas) "height" "100%")
+    (aset (.-style canvas) "zindex" "100")
+    (aset (.-style canvas) "top" "0px")
+    (aset (.-style canvas) "webkitUserSelect" "none")
+
+    (assoc @obj :canvas canvas)
+    (assoc @obj :context context)
+    (set-dimension (.-clientHeight holder) (.-clientWidth holder))
+
+    (let [maxy (max 0 (- (get @settings :contenth) (get @settings :screenh)))]
+      (assoc @obj :max-scrolly maxy)
+      (assoc @obj :max-scrolly2 maxy)
+
+      (when (and (get @settings :is-vertical-scroll) (get @settings :always-visible))
+        (aset (.-style canvas) "display" (if (= 0 maxy) "none" ""))))
+
+    (let [maxx (max 0 (- (get @settings :contentw) (get @settings :screenw)))]
+      (assoc @obj :max-scrollx maxx)
+      (assoc @obj :max-scrollx2 maxx)
+
+      (when (and (get @settings :is-horizontal-scroll) (get @settings :always-visible))
+        (aset (.-style canvas) "display" (if (= 0 maxx) "none" ""))))
+    
+    (set-scroll-hw)
+    (assoc @obj :arrow-position
+           (if (get @settings :show-arrows)
+             (js/Math.round (+ (get @settings :arrow-dim) (round-for-scale dpr) (round-for-scale dpr)))
+             (js/Math.round dpr)))
+    
+    (assoc @obj :panel-height (- (get @obj :canvash) (* 2 (get @obj :arrow-position))))
+    (assoc @obj :panel-width (- (get @obj :canvasw) (* 2 (get @obj :arrow-position))))
+    
+    (recalc-scroller nil)))
+
 
 (comment
   (get-client-width nil)
@@ -197,7 +358,7 @@
   (round-for-scale 5.5)
   (round-for-scale @browser/retina-pixel-ratio)
 
-  
+
 
   (require '[app.canvas :as cv] :reload)
 
@@ -220,7 +381,7 @@
   (cv/draw-image ctx arrow {:x 10 :y 10 :w 26 :h 26})
   (cv/draw-image ctx arrow 10  10)
   
-
-
+  (require '[app.state :refer [setv getv]])
   )
+
 
