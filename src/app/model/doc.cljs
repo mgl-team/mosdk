@@ -31,7 +31,10 @@
    ;; split long text to fit doc height
    :text []})
 
-(def doc-content
+(def para-line
+  {:content []})
+
+(def para-str
   {:str ""
    :width 10
    :height 10
