@@ -369,7 +369,7 @@
   ctx
   (cv/fill-style ctx "#ADADAD")
   (cv/stroke-style ctx "#adadad")
-  (draw-eq-triangle ctx 30 60 60)
+  (draw-eq-triangle ctx 26 60 60)
 
   (cv/clear-rect ctx {:x 0 :y 0 :w 200 :h 200})
 
@@ -380,8 +380,10 @@
   (cv/shadow-color ctx "rgba(0,0,0,0)")
   (cv/draw-image ctx arrow {:x 10 :y 10 :w 26 :h 26})
   (cv/draw-image ctx arrow 10  10)
-  
+
   (require '[app.state :refer [setv getv]])
-  )
+
+  (prn "aa")
+  (bit-xor 1 2))
 
 

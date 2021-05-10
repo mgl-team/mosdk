@@ -36,8 +36,6 @@
     ;; (aset (.-style container) "width" "")
     ))
 
-(defn equilateral-triangle [w h]
-  )
 (comment
   (init)
   (.getElementById js/document "canvas")
