@@ -4,10 +4,6 @@
 
 (def fonts (atom {}))
 
-(defn init 
-  []
-  (reset! fonts (atom {})))
-
 (defn load [name url]
   (-> (js/fetch url #js {})
       (.then (fn [resp]
@@ -32,6 +28,9 @@
 (defn layout [font-name value]
   (.layout (get-font font-name) value))
 
+(defn render [ctx glyph font-size]
+  (.render glyph ctx font-size))
+
 (defn get-glyphs [font-name value]
   (if value
     (gobj/get (layout font-name value) "glyphs")
@@ -47,17 +46,18 @@
      (glyph-width glyph)
      (font-scale font-name)))
 
-(defn -width [font-name font-size glyphs]
-  (* (/ font-size 1000) 
-     (apply + (map #(* (glyph-width %) 
-                       (font-scale font-name)) 
-                   glyphs))))
+(defn glyph [font id]
+  (.getGlyph (get-font font) id))
+
+(defn glyph-ids [font value]
+  (map #(gobj/get % "id") (get-glyphs font value)))
 
 (comment
   (load :white "http://localhost:8700/fonts/monbaiti.ttf")
   load
 
   (get-font :white)
+  
   (units-per-em :white)
   (font-scale :white)
   (js/console.log (layout :white "ᠡᠷᠬᠡ"))
