@@ -1,6 +1,6 @@
-(ns app.common.range
+(ns app.common.code-range
   (:require 
-   [app.font :as font]))
+   [app.font.base :as font]))
 
 (defonce ^:private code-range (atom #{}))
 
@@ -47,12 +47,4 @@
   (subs "ᠡᠷᠬᠡ" 1)
   (font-from-char (subs "ᠡᠷᠬᠡ" 1))
 
-  (def tst (atom #{}))
-  tst
-  (swap! tst conj {:a 1 :order 1})
-  (swap! tst conj {:a 4 :order 4})
-  (swap! tst conj {:a 9 :order 0})
-  (swap! tst #(remove (fn [x] (= 4 (:a x))) %))
-  (swap! tst #(sort-by :order > %))
-  (remove  #{:a})
   )
