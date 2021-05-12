@@ -44,32 +44,10 @@
 
   (require '[app.canvas :as cv])
   (require '[app.font :as font] :reload)
+  (font/get-font :white)
   (font/init)
   (font/load :white "http://localhost:8700/fonts/monbaiti.ttf")
   font/fonts
-  (font/glyph :white 225)
-  (font/layout :white "ᠡᠷᠬᠡ")
-
-  (rest *1)
-  (map #(gobj/get % "id") (font/get-glyphs :white "ᠡᠷᠬᠡ"))
-  (def layout *1)
-  (js/console.log *1)
-  (font/get-font :white)
-  (font/get-glyphs :white "ᠡᠷᠬᠡ")
-  (js->clj *1)
-  (rest *1)
-  (def gl *1)
-  (def gl (font/get-glyphs :white "ᠡᠷᠬᠡ"))
-
-  (def canvas (js/document.getElementById "canvas"))
-  canvas
-  (def ctx (cv/get-context canvas "2d"))
-  ctx
-
-  (require '[goog.object :as gobj])
-
-  (def layout (font/layout :white "ᠡᠷᠬᠡ"))
-  (gobj/get (font/layout :white "ᠡᠷᠬᠡ") "glyphs")
 
 
   ;;

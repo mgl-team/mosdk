@@ -2,7 +2,9 @@
   (:require 
    [goog.object :as gobj]))
 
-(def fonts (atom {}))
+(defonce ^:private 
+  fonts
+  (atom {}))
 
 (defn load [name url]
   (-> (js/fetch url #js {})
@@ -18,6 +20,9 @@
 
 (defn get-font [name]
   (get @fonts name))
+
+(defn character-set [name]
+  (gobj/get (get-font name) "characterSet"))
 
 (defn units-per-em [name]
   (.-unitsPerEm (get-font name)))
@@ -103,6 +108,7 @@
   (.getVariation (get-font :white) #js {:wght 0.5})
   (.-variationAxes (get-font :white))
   (.-copyright (get-font :white))
+  (.-characterSet (get-font :white))
 
   (cv/translate ctx 10 10)
   (cv/text ctx {:text "abcd" :x 10 :y 20})
