@@ -30,6 +30,16 @@
 (defn font-scale [name]
   (/ 1000 (units-per-em name)))
 
+(defn height-of-font [name size]
+  (let [font    (get-font name)
+        ytop    (* (font-scale name)
+                   (or (gobj/get font "ascent")
+                       (-> font (gobj/get "bbox") (gobj/get "maxY"))))
+        ybottom (* (font-scale name)
+                   (or (gobj/get font "descent")
+                       (-> font (gobj/get "bbox") (gobj/get "minY"))))]
+    (-> (- ytop ybottom) (/ 1000) (* size))))
+
 (defn layout [font-name value]
   (.layout (get-font font-name) value))
 
@@ -64,6 +74,8 @@
   (get-font :white)
   
   (units-per-em :white)
+  (height-of-font :white 100)
+  (js/console.log (.-bbox (get-font :white)))
   (font-scale :white)
   (js/console.log (layout :white "ᠡᠷᠬᠡ"))
   (def glyphs (.-glyphs (layout :white "ᠡᠷᠬᠡ ")))

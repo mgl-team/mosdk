@@ -1,13 +1,17 @@
 (ns app.model.style)
 
+(def font-style
+  {:name          nil
+   :original-size 10
+   :scale         1
+   :size          10})
 
 (def text-style
   {:bold             false
    :italic           false
    :strike-through   false
    :underline        false
-   :font             nil
-   :font-size        10
+   :font             {}
    :color            "#000000"
    :vert-align       :baseline ;; :superScript :subscript
    :align            :default ;; left right center justified
@@ -20,7 +24,7 @@
    :contents []})
 
 (def paragraph-style
-  {:spacing 3.15})
+  {:spacing 0.035})
 
 ;;https://edu.gcfglobal.org/en/word2016/line-and-paragraph-spacing/1/
 
