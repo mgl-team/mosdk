@@ -28,8 +28,7 @@
           (if (< index total-keys)
             (recur (inc index))
             nil)))
-      nil))
-  )
+      nil)))
 
 (defn font-from-char [c]
   (-> c char-code code-font))
