@@ -25,10 +25,11 @@
    :h 0})
 
 (def flowobject
-  {:bound bound
-   :type  :default
-   :w     0 
-   :h     0})
+  {:bound   bound
+   :type    :default
+   :content nil
+   :w       0 
+   :h       0})
 
 (def element
   {:type    :text ;; :flow :table
@@ -53,18 +54,19 @@
    :cells   []})
 
 (def range
-  {:x 0
-   :y 0
-   :w 0
-   :h 0
+  {:x        0
+   :y        0
+   :w        0
+   :h        0
    :elements []})
 
 (def column
-  :ranges [])
+  {:baseline 0
+   :ranges   []})
 
 (def indent 
   {:level 0
-   :type :default})
+   :type  :default})
 
 (def paragraph
   {:bound        bound
@@ -74,18 +76,13 @@
    :indent       indent
    :columns      []})
 
-
-(def content 
-  {:type :para ;; table image math
-   :obj  nil})
-
 (def page 
-  {:bound    {}
-   :contents []
-   :flows    []})
+  {:bound {}
+   :paras []
+   :flows []})
 
 (def doc
-  {:pages []
+  {:pages    []
    :settings {}
-   :width 100
-   :height 100})
+   :width    100
+   :height   100})
