@@ -1,6 +1,7 @@
 (ns app.font.base
   (:require 
-   [goog.object :as gobj]))
+   [goog.object :as gobj]
+   [app.common.define :as define]))
 
 (defonce ^:private 
   fonts
@@ -38,7 +39,7 @@
         ybottom (* (font-scale name)
                    (or (gobj/get font "descent")
                        (-> font (gobj/get "bbox") (gobj/get "minY"))))]
-    (-> (- ytop ybottom) (/ 1000) (* size))))
+    (-> (- ytop ybottom) (/ 1000) (* size) (* define/pt-to-mm))))
 
 (defn layout [font-name value]
   (.layout (get-font font-name) value))
@@ -59,7 +60,8 @@
 (defn width [font-name font-size glyph]
   (* (/ font-size 1000)
      (glyph-width glyph)
-     (font-scale font-name)))
+     (font-scale font-name)
+     define/pt-to-mm))
 
 (defn glyph [font id]
   (.getGlyph (get-font font) id))

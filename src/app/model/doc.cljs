@@ -53,16 +53,13 @@
    :columns 0
    :cells   []})
 
-(def range
-  {:x        0
-   :y        0
-   :w        0
-   :h        0
+(def part
+  {:bound    bound
    :elements []})
 
 (def column
   {:baseline 0
-   :ranges   []})
+   :parts    []})
 
 (def indent 
   {:level 0
@@ -77,7 +74,7 @@
    :columns      []})
 
 (def page 
-  {:bound {}
+  {:bound bound
    :paras []
    :flows []})
 
