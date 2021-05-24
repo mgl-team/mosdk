@@ -83,3 +83,9 @@
    :settings {}
    :width    100
    :height   100})
+
+(def cursor 
+  {:x  0
+   :y  0
+   :px 0
+   :py 0})
