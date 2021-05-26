@@ -35,6 +35,14 @@
     :opacity    0.5
     })
 
+(def spacing
+  {
+    :after        0
+    :before       0
+    :line         nil
+    :line-rule    :auto  ;; exactly   at-least
+    })
+
 (def text
   { :text             ""
     :bold             false
@@ -107,17 +115,21 @@
    :type  :default})
 
 (def paragraph
-  {:bound        bound
-   :space        1.15
-   :space-after  3.5
-   :space-before 0
-   :indent       indent
-   :columns      []})
+  { :border         border
+    :heading        nil
+    :spacing        nil
+    :border         nil
+    :outline-level  0
+    :alignment      nil
+    :indent         :first-line ;; start end right left hanging
+    :contents        []})
 
 (def page
-  {:bound bound
-   :paras []
-   :flows []})
+  {
+    :orientation      :default
+    :height           100
+    :width            100
+   })
 
 (def doc
   {:pages    []
