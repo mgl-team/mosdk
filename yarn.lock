@@ -40,6 +40,11 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
+"@ryanatkn/collisions@^2.0.22":
+  version "2.0.22"
+  resolved "https://registry.nlark.com/@ryanatkn/collisions/download/@ryanatkn/collisions-2.0.22.tgz#7aaf2626d9088b627dc4adb1859387b66d318fe2"
+  integrity sha1-eq8mJtkIi2J9xK2xhZOHtm0xj+I=
+
 acorn-node@^1.6.1:
   version "1.8.2"
   resolved "https://registry.npm.taobao.org/acorn-node/download/acorn-node-1.8.2.tgz#114c95d64539e53dede23de8b9d96df7c7ae2af8"

@@ -6,19 +6,60 @@
    :scale         1
    :size          10})
 
-(def text-style
-  {:bold             false
-   :italic           false
-   :strike-through   false
-   :underline        false
-   :font             font
-   :color            "#000000"
-   :vert-align       :baseline ;; :superScript :subscript
-   :align            :default ;; left right center justified
-   :background-color "#000000"
-   :high-light       "#000000"})
-   
-(def bound 
+(def border-style
+  {
+    :color    nil
+    :space    1
+    :style    :single
+    :size     1
+    })
+
+(def border
+  {
+    :left border-style
+    :right border-style
+    :top border-style
+    :bottom border-style})
+
+(def offset
+  {
+    :x 10
+    :y 10
+    })
+
+(def shadow
+  {
+    :color      "#000000"
+    :blur       0
+    :offset     offset
+    :opacity    0.5
+    })
+
+(def text
+  { :text             ""
+    :bold             false
+    :italic           false
+    :strike           false
+    :double-strike    false
+    :underline        {:type :default :color "#000000"}
+    :font             font
+    :color            "#000000"
+    :superscript      false
+    :subscript        false
+    :align            :default ;; left right center justified
+    :background-color "#000000"
+    :highlight        "#000000"
+    :shadow           nil
+    :breaks            0})
+
+(def symbol-run
+  {
+    :char ""
+    :font font ;; default Windings font
+    })
+
+
+(def bound
   {:x 0
    :y 0
    :w 0
@@ -28,7 +69,7 @@
   {:bound   bound
    :type    :default
    :content nil
-   :w       0 
+   :w       0
    :h       0})
 
 (def element
@@ -39,10 +80,10 @@
    :width   0
    :height  0})
 
-(def cell-style 
+(def cell-style
   {})
 
-(def cell 
+(def cell
   {:style   cell-style
    :content nil
    :w       0
@@ -61,7 +102,7 @@
   {:baseline 0
    :parts    []})
 
-(def indent 
+(def indent
   {:level 0
    :type  :default})
 
@@ -73,7 +114,7 @@
    :indent       indent
    :columns      []})
 
-(def page 
+(def page
   {:bound bound
    :paras []
    :flows []})
@@ -84,7 +125,7 @@
    :width    100
    :height   100})
 
-(def cursor 
+(def cursor
   {:x  0
    :y  0
    :px 0
