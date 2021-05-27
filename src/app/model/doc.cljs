@@ -8,63 +8,65 @@
 
 (def border-style
   {
-    :color    nil
-    :space    1
-    :style    :single
-    :size     1
-    })
+   :color nil
+   :space 1
+   :style :single
+   :size  1})
+
 
 (def border
   {
-    :left border-style
-    :right border-style
-    :top border-style
-    :bottom border-style})
+   :left   border-style
+   :right  border-style
+   :top    border-style
+   :bottom border-style})
 
 (def offset
   {
-    :x 10
-    :y 10
-    })
+   :x 10
+   :y 10})
+
 
 (def shadow
   {
-    :color      "#000000"
-    :blur       0
-    :offset     offset
-    :opacity    0.5
-    })
+   :color   "#000000"
+   :blur    0
+   :offset  offset
+   :opacity 0.5})
+
 
 (def spacing
   {
-    :after        0
-    :before       0
-    :line         nil
-    :line-rule    :auto  ;; exactly   at-least
-    })
+   :after     0
+   :before    0
+   :line      nil
+   :line-rule :auto})  ;; exactly   at-least
+
 
 (def text
-  { :text             ""
-    :bold             false
-    :italic           false
-    :strike           false
-    :double-strike    false
-    :underline        {:type :default :color "#000000"}
-    :font             font
-    :color            "#000000"
-    :superscript      false
-    :subscript        false
-    :align            :default ;; left right center justified
-    :background-color "#000000"
-    :highlight        "#000000"
-    :shadow           nil
-    :breaks            0})
+  {
+   :text             ""
+   :bold             false
+   :italic           false
+   :strike           false
+   :double-strike    false
+   :underline        {:type  :default
+                      :color "#000000"}
+   :font             font
+   :color            "#000000"
+   :superscript      false
+   :subscript        false
+   :align            :default ;; left right center justified
+   :background-color "#000000"
+   :highlight        "#000000"
+   :shadow           nil
+   :breaks           0})
 
 (def symbol-run
   {
-    :char ""
-    :font font ;; default Windings font
-    })
+   :char ""
+   :font font}) ;; default Windings font
+
 
 
 (def bound
@@ -115,21 +117,22 @@
    :type  :default})
 
 (def paragraph
-  { :border         border
-    :heading        nil
-    :spacing        nil
-    :border         nil
-    :outline-level  0
-    :alignment      nil
-    :indent         :first-line ;; start end right left hanging
-    :contents        []})
+  {
+   :border        border
+   :heading       nil
+   :spacing       nil
+   :border        nil
+   :outline-level 0
+   :alignment     nil
+   :indent        :first-line ;; start end right left hanging
+   :contents      []})
 
 (def page
   {
-    :orientation      :default
-    :height           100
-    :width            100
-   })
+   :orientation :default
+   :height      100
+   :width       100})
+
 
 (def doc
   {:pages    []
