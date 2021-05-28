@@ -6,6 +6,14 @@
    :scale         1
    :size          10})
 
+(def under-line 
+  {
+   ;; SINGLE, WORD, DOUBLE, THICK, DOTTED, DOTTEDHEAV, 
+   ;; DASH, DASHEDHEAV, DASHLONG, DASHLONGHEAV, DOTDASH, DASHDOTHEAVY, 
+   ;; DOTDOTDAS, DASHDOTDOTHEAVY, WAVE, WAVYHEAVY, WAVYDOUBLE
+   :type  :single
+   :color "#000000"})
+
 (def border-style
   {
    :color nil
@@ -50,8 +58,7 @@
    :italic           false
    :strike           false
    :double-strike    false
-   :underline        {:type  :default
-                      :color "#000000"}
+   :underline        under-line
    :font             font
    :color            "#000000"
    :superscript      false
@@ -67,6 +74,16 @@
    :char ""
    :font font}) ;; default Windings font
 
+(def image 
+  {:data ""
+   :transformation {:x 0 :y 0 :flip {:vertical true
+                                     :horizontal true}
+                    :rotation 0}
+   :floating {:x 0 :y 0 :zindex 0
+              :wrap {:type :none ;; square tight top-and-bottom
+                     :side :both ;; left right largest
+                     }
+              :margins {:top 0 :bottom 0 :left 0 :right 0}}})
 
 
 (def bound
