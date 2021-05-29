@@ -17,10 +17,8 @@
 (def border-style
   {
    :color nil
-   :space 1
-   :style :single
+   :style :single ;; :none :doted :dashed
    :size  1})
-
 
 (def border
   {
@@ -74,6 +72,12 @@
    :char ""
    :font font}) ;; default Windings font
 
+(def tab-stop
+  {
+   :type :left ;; bar :center :clear :decimal :end :num :right :start
+   :position :max ;; max=9026    or less then max
+  })
+
 (def image 
   {:data ""
    :transformation {:x 0 :y 0 :flip {:vertical true
@@ -107,19 +111,77 @@
    :width   0
    :height  0})
 
-(def cell-style
-  {})
+(def table-cell
+  {:shading {:color "" :fill "" :val :clear ;;nil percent_10 - 12 15 20 25 30 35 37 40 45 5 50  55 60 62 65 70 75 80 85 87 90 95
+                                            ;; reverse_diagonal_stripe solid thin_diagonal_cross 
+                                            ;; thin_diagonal_stripe thin_horizontal_cross 
+                                            ;; thin_reverse_diagonal_stripe thin_vertical_stripe vertical_stripe
+                                            ;; diagonal_cross diagonal_stripe horizontal_cross horizontal_stripe
+                                            ;; nil
+             }
+   :margins {:top 0 :left 0 :bottom 0 :right 0}
+   :vertical-align :center ;;bottom top
+   :vertical-merge :continue ;;restart
+   :text-direction :bottom-to-top-left-to-right ;; left-to-right-top-to-bottom top-to-bottom-right-to-left
+   :row-span 0
+   :column-span 0
+   :width {:size 0 :type :auto ;; DXA nil percentage
+           ;; value is in twentieths of a point
+           ;; is considered as zero
+           ;; percent of table width
+           }
+   :borders {:color ""
+             :size  0
+             :style :single ;;none outside dashed dotted inset thick wave 
+             }
+   :contents []})
 
-(def cell
-  {:style   cell-style
-   :content nil
-   :w       0
-   :h       0})
+(def table-row 
+  {
+   :children []
+   :cant-split false
+   :table-header false
+   :height {:height 0 :rule :auto ;; atleast exact
+            }
+  })
 
 (def table
-  {:rows    0
-   :columns 0
-   :cells   []})
+  {:align   :center ;; left right start end justified both
+   :layout  :autofit ;; fixed
+   :with    {:type :auto ;; DXA nil percentage
+             :size 1}
+   :style   "" ;; style id string 
+   :rows    []
+   :column-widths []
+   :margins {:bottom    0
+             :left      0
+             :right     0
+             :top       0
+             :with-type :auto ;; dxa nil percentage
+             }
+   :borders {:bottom {:color ""
+                      :size  0
+                      :style :single ;;none outside dashed dotted inset thick wave 
+                      }
+             :top    nil
+             :left   nil
+             :right  nil
+             :inside-horizontal {:color "" :size 0 :style :single}
+             :inside-vertical {:color "" :size 0 :style :single}}
+   :float   {:overlap                      :never ;; overlap
+             :right-from-text              0
+             :left-from-text               0
+             :top-from-text                0
+             :bottom-from-text             0
+             :vertical-anchor              :margin ;; page text
+             :horizontal-anchor            :margin ;; page text
+             :relative-horizontal-position :center ;; left right inside outside
+             :relative-vertical-position   :center ;; left right index outside
+             :absolute-horizontal-position 0
+             :absolute-vertaical-position  0
+             }
+    :visually-right-to-left false
+   })
 
 (def part
   {:bound    bound
@@ -143,6 +205,12 @@
    :alignment     nil
    :indent        :first-line ;; start end right left hanging
    :contents      []})
+
+(def page-numbers
+  {
+   :start 1
+   :type  :none;;:decimal ;;
+  })
 
 (def page
   {
