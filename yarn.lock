@@ -817,6 +817,11 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+konva@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.nlark.com/konva/download/konva-8.0.2.tgz#8783b5bc905918934e9dc58f782472cbe661fe18"
+  integrity sha1-h4O1vJBZGJNOncWPeCRyy+Zh/hg=
+
 lodash.toarray@^4.4.0:
   version "4.4.0"
   resolved "https://registry.npm.taobao.org/lodash.toarray/download/lodash.toarray-4.4.0.tgz#24c4bfcd6b2fba38bfd0594db1179d8e9b656561"
