@@ -6,10 +6,10 @@
    :scale         1
    :size          10})
 
-(def under-line 
+(def under-line
   {
-   ;; SINGLE, WORD, DOUBLE, THICK, DOTTED, DOTTEDHEAV, 
-   ;; DASH, DASHEDHEAV, DASHLONG, DASHLONGHEAV, DOTDASH, DASHDOTHEAVY, 
+   ;; SINGLE, WORD, DOUBLE, THICK, DOTTED, DOTTEDHEAV,
+   ;; DASH, DASHEDHEAV, DASHLONG, DASHLONGHEAV, DOTDASH, DASHDOTHEAVY,
    ;; DOTDOTDAS, DASHDOTDOTHEAVY, WAVE, WAVYHEAVY, WAVYDOUBLE
    :type  :single
    :color "#000000"})
@@ -65,7 +65,8 @@
    :background-color "#000000"
    :highlight        "#000000"
    :shadow           nil
-   :breaks       
+   :breaks
+
 (def text-fram
   {
    :position  {:x 0
@@ -73,19 +74,19 @@
    :width     0
    :height    0
    :anchor    {:horizontal :margin ;; page text
-               :vertical   :margin ;; page text
-               }
-   :alignment {:x :center ;; left right inside outside 
-               :y :center ;; top bottom inside outside
-               }
+               :vertical   :margin} ;; page text
+
+   :alignment {:x :center ;; left right inside outside
+               :y :center} ;; top bottom inside outside
+
    :borders   {:top    nil
                :bottom nil
                :left   nil
-               :right  nil
+               :right  nil}})
              ;; color: "auto", space: 1, value: "single", size: 6,
-               }
-   })
-   
+
+
+
 (def symbol-run
   {
    :char ""
@@ -94,18 +95,18 @@
 (def tab-stop
   {
    :type :left ;; bar :center :clear :decimal :end :num :right :start
-   :position :max ;; max=9026    or less then max
-  })
+   :position :max}) ;; max=9026    or less then max
 
-(def image 
+
+(def image
   {:data ""
    :transformation {:x 0 :y 0 :flip {:vertical true
                                      :horizontal true}
                     :rotation 0}
    :floating {:x 0 :y 0 :zindex 0
               :wrap {:type :none ;; square tight top-and-bottom
-                     :side :both ;; left right largest
-                     }
+                     :side :both} ;; left right largest
+
               :margins {:top 0 :bottom 0 :left 0 :right 0}}})
 
 
@@ -133,13 +134,13 @@
 (def table-cell
   {:shading        {:color ""
                     :fill  ""
-                    :val   :clear ;;nil percent_10 - 12 15 20 25 30 35 37 40 45 5 50  55 60 62 65 70 75 80 85 87 90 95
-                                            ;; reverse_diagonal_stripe solid thin_diagonal_cross 
-                                            ;; thin_diagonal_stripe thin_horizontal_cross 
+                    :val   :clear} ;;nil percent_10 - 12 15 20 25 30 35 37 40 45 5 50  55 60 62 65 70 75 80 85 87 90 95
+                                            ;; reverse_diagonal_stripe solid thin_diagonal_cross
+                                            ;; thin_diagonal_stripe thin_horizontal_cross
                                             ;; thin_reverse_diagonal_stripe thin_vertical_stripe vertical_stripe
                                             ;; diagonal_cross diagonal_stripe horizontal_cross horizontal_stripe
                                             ;; nil
-                    }
+
    :margins        {:top    0
                     :left   0
                     :bottom 0
@@ -150,44 +151,44 @@
    :row-span       0
    :column-span    0
    :width          {:size 0
-                    :type :auto ;; DXA nil percentage
+                    :type :auto} ;; DXA nil percentage
            ;; value is in twentieths of a point
            ;; is considered as zero
            ;; percent of table width
-                    }
+
    :borders        {:color ""
                     :size  0
-                    :style :single ;;none outside dashed dotted inset thick wave 
-                    }
+                    :style :single} ;;none outside dashed dotted inset thick wave
+
    :contents       []})
 
-(def table-row 
+(def table-row
   {
    :children []
    :cant-split false
    :table-header false
-   :height {:height 0 :rule :auto ;; atleast exact
-            }
-  })
+   :height {:height 0 :rule :auto}}) ;; atleast exact
+
+
 
 (def table
   {:align                  :center ;; left right start end justified both
    :layout                 :autofit ;; fixed
    :with                   {:type :auto ;; DXA nil percentage
                             :size 1}
-   :style                  "" ;; style id string 
+   :style                  "" ;; style id string
    :rows                   []
    :column-widths          []
    :margins                {:bottom    0
                             :left      0
                             :right     0
                             :top       0
-                            :with-type :auto ;; dxa nil percentage
-                            }
+                            :with-type :auto} ;; dxa nil percentage
+
    :borders                {:bottom            {:color ""
                                                 :size  0
-                                                :style :single ;;none outside dashed dotted inset thick wave 
-                                                }
+                                                :style :single} ;;none outside dashed dotted inset thick wave
+
                             :top               nil
                             :left              nil
                             :right             nil
@@ -207,12 +208,12 @@
                             :relative-horizontal-position :center ;; left right inside outside
                             :relative-vertical-position   :center ;; left right index outside
                             :absolute-horizontal-position 0
-                            :absolute-vertaical-position  0
-                            }
-   :visually-right-to-left false
-   })
+                            :absolute-vertaical-position  0}
 
-(def table-of-contents 
+   :visually-right-to-left false})
+
+
+(def table-of-contents
   {:hyperlink                             true
    :caption-label                         ""
    :caption-label-including-numbers       ""
@@ -228,8 +229,8 @@
    :styles-with-levels                    []   ;;{:level 1 :style-name ""}
    :tc-field-identifier                   ""
    :tc-field-level-range                  ""
-   :use-applied-paragraph-outline-level   false
-   })
+   :use-applied-paragraph-outline-level   false})
+
 
 (def part
   {:bound    bound
@@ -278,3 +279,8 @@
    :y  0
    :px 0
    :py 0})
+
+(def bookmark
+  {:contents []
+   :start {:id "" :linkid ""}
+   :end {:linkid ""}})

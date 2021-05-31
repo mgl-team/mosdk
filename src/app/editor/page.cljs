@@ -32,9 +32,9 @@
         width  (.-innerWidth js/window)]
     (js/console.log width height)
     (js/console.log (.-clientWidth @container)
-                    (.-clientHeight @container))
+                    (.-clientHeight @container))))
     ;; (aset (.-style container) "width" "")
-    ))
+
 
 (comment
   (init)
@@ -52,7 +52,7 @@
   (->
    (aget editor "style")
    (aget "innerHeight"))
-  
+
   (.addEventListener js/window "resize" #(js/console.log "resizing ...."))
   (.removeEventListener js/window "resize" #(js/console.log "resizing ...."))
   (.addEventListener js/window "resize" on-resize)

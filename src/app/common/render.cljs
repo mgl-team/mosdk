@@ -2,7 +2,6 @@
   (:require 
    [app.font :as font]
    [app.canvas :as cv]
-   [goog.object :as gobj]))
 
 (defn element [id]
   (js/document.getElementById id))
