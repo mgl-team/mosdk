@@ -64,8 +64,9 @@
    :align            :default ;; left right center justified
    :background-color "#000000"
    :highlight        "#000000"
-   :shadow           nil
-   :breaks
+   :shadow           nil})
+
+  ;;  :breaksbk
 
 (def text-fram
   {
@@ -108,28 +109,6 @@
                      :side :both} ;; left right largest
 
               :margins {:top 0 :bottom 0 :left 0 :right 0}}})
-
-
-(def bound
-  {:x 0
-   :y 0
-   :w 0
-   :h 0})
-
-(def flowobject
-  {:bound   bound
-   :type    :default
-   :content nil
-   :w       0
-   :h       0})
-
-(def element
-  {:type    :text ;; :flow :table
-   :content nil
-   :style   {}
-   :pos     0
-   :width   0
-   :height  0})
 
 (def table-cell
   {:shading        {:color ""
@@ -232,14 +211,6 @@
    :use-applied-paragraph-outline-level   false})
 
 
-(def part
-  {:bound    bound
-   :elements []})
-
-(def column
-  {:baseline 0
-   :parts    []})
-
 (def indent
   {:level 0
    :type  :default})
@@ -255,11 +226,18 @@
    :indent        :first-line ;; start end right left hanging
    :contents      []})
 
+
 (def page-numbers
   {
    :start 1
-   :type  :none;;:decimal ;;
-  })
+   :type  :none});;:decimal ;;
+
+(def section
+  {:cols {:num 0 :sep false :space 0
+          :col {:w 720 :space 20}}
+   :footer-wrapper-group nil
+   :footer-reference nil
+   :grid nil})
 
 (def page
   {
@@ -273,12 +251,6 @@
    :settings {}
    :width    100
    :height   100})
-
-(def cursor
-  {:x  0
-   :y  0
-   :px 0
-   :py 0})
 
 (def bookmark
   {:contents []
