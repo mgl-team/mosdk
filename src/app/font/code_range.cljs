@@ -1,5 +1,5 @@
 (ns app.common.code-range
-  (:require 
+  (:require
    [app.font.base :as font]))
 
 (defonce ^:private code-range (atom #{}))
@@ -14,7 +14,7 @@
                            :order     99})
    (swap! code-range #(sort-by :order > %))))
 
-(defn char-code 
+(defn char-code
   [v]
   (.charCodeAt v 0))
 
@@ -33,7 +33,7 @@
 (defn font-from-char [c]
   (-> c char-code code-font))
 
-(comment 
+(comment
   (.charCodeAt "ᠡᠷᠬᠡ" 0)
   (some #{6177} chars)
 
@@ -44,6 +44,4 @@
   (add-range :white)
   (code-font 6177)
   (subs "ᠡᠷᠬᠡ" 1)
-  (font-from-char (subs "ᠡᠷᠬᠡ" 1))
-
-  )
+  (font-from-char (subs "ᠡᠷᠬᠡ" 1)))

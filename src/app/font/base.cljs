@@ -1,9 +1,9 @@
 (ns app.font.base
-  (:require 
+  (:require
    [goog.object :as gobj]
    [app.common.define :as define]))
 
-(defonce ^:private 
+(defonce ^:private
   fonts
   (atom {}))
 
@@ -74,7 +74,7 @@
   load
 
   (get-font :white)
-  
+
   (units-per-em :white)
   (height-of-font :white 100)
   (js/console.log (.-bbox (get-font :white)))
@@ -136,10 +136,9 @@
   (def scale (-> 48 (* (font-scale :white) 48) (/ 1000)))
   scale
   (cv/scale ctx scale scale)
-   ((-> glyphs first .-path .toFunction) ctx)
+  ((-> glyphs first .-path .toFunction) ctx)
   (cv/close-path ctx)
   (cv/fill ctx)
-  (cv/clear-rect ctx {:x 0 :y 0 :w 100 :h 100})
-  
+  (cv/clear-rect ctx {:x 0 :y 0 :w 100 :h 100}))
+
   ;;
-  )

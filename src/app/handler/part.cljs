@@ -1,4 +1,3 @@
 (ns app.handler.bound)
 
-(defn split-part [bound obj]
-  )
+(defn split-part [bound obj])
