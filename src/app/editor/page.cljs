@@ -60,4 +60,11 @@
 
 
   container
+
+
+  ;; konva
+  (def scale (* 48 (/ 1 (font/units-per-em :white))))
+  (font/glyph :white 275)
+  (def args (clj->js {:x 50 :y 50 :data *1 :fill "green" :scale {:x scale :y (- scale)} :rotation 90}))
+  
   (prn "Hi"))
