@@ -62,9 +62,36 @@
   container
 
 
-  ;; konva
-  (def scale (* 48 (/ 1 (font/units-per-em :white))))
+  (require '[app.font.base :as font])
+  (def font (font/get-font :white))
+  font
   (font/glyph :white 275)
-  (def args (clj->js {:x 50 :y 50 :data *1 :fill "green" :scale {:x scale :y (- scale)} :rotation 90}))
+  (js/console.log (font/layout :white "ᠡᠷᠬᠡ"))
+
+  (js/console.log (font/glyph :white 275))
+
+  ;; konva
+  (def konva js/window.Konva)
+  (def scale (* 48 (font/font-scale :white)))
+  scale
+  (def glyph (font/glyph :white 225))
+  (def y (+ 50 (font/width :white 48 glyph)))
+  y
+  (font/svg (font/glyph :white 225))
+  (def args (clj->js {:x 50 :y 50 :data (font/svg (font/glyph :white 225)) :fill "green" :scale {:x scale :y (- scale)} :rotation 90}))
+
+  (def args (clj->js {:x 50 :y y :data (font/svg (font/glyph :white 678)) :fill "green" :scale {:x scale :y (- scale)} :rotation 90}))
+  args
   
+  ;;
+  (def stage (konva.Stage. (clj->js {:container "app" :width 400 :height 400})))
+  (def layer (konva.Layer.))
+  (def path (konva.Path. args))
+  (.add layer path)
+  (.add stage layer)
+  (.draw layer)
+
+  ;;
+  (.destroyChildren layer)
+
   (prn "Hi"))

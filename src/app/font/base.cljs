@@ -29,7 +29,7 @@
   (.-unitsPerEm (get-font name)))
 
 (defn font-scale [name]
-  (/ 1000 (units-per-em name)))
+  (/ 1 (units-per-em name)))
 
 (defn height-of-font [name size]
   (let [font    (get-font name)
@@ -39,7 +39,7 @@
         ybottom (* (font-scale name)
                    (or (gobj/get font "descent")
                        (-> font (gobj/get "bbox") (gobj/get "minY"))))]
-    (-> (- ytop ybottom) (/ 1000) (* size) (* define/pt-to-mm))))
+    (-> (- ytop ybottom) (* size) (* define/pt-to-mm))))
 
 (defn layout [font-name value]
   (.layout (get-font font-name) value))
@@ -58,10 +58,13 @@
     0))
 
 (defn width [font-name font-size glyph]
-  (* (/ font-size 1000)
+  (* font-size
      (glyph-width glyph)
-     (font-scale font-name)
-     define/pt-to-mm))
+     (font-scale font-name)))
+     ;define/pt-to-mm))
+
+(defn svg [glyph]
+  (.toSVG (.-path glyph)))
 
 (defn glyph [font id]
   (.getGlyph (get-font font) id))
@@ -71,6 +74,7 @@
 
 (comment
   (load :white "http://localhost:8700/fonts/monbaiti.ttf")
+  (load :white "http://localhost:8700/fonts/mnglwhiteotf.ttf")
   load
 
   (get-font :white)
@@ -133,7 +137,7 @@
   ;;   (doseq [x commands]
   ;;     (())))
   (js/console.log (-> glyphs first .-path))
-  (def scale (-> 48 (* (font-scale :white) 48) (/ 1000)))
+  (def scale (-> 48 (* (font-scale :white))))
   scale
   (cv/scale ctx scale scale)
   ((-> glyphs first .-path .toFunction) ctx)
